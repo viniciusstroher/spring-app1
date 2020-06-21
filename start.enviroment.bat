@@ -2,22 +2,28 @@
 echo Iniciando App
 
 IF "%JAVA_HOME%" == "" (
-    echo "Configure a variavel JAVA_HOME!"
+    echo Define JAVA_HOME
 ) ELSE (
-    echo JAVA_HOME PATH: %JAVA_HOME%
+    echo JAVA_HOME PATH %JAVA_HOME%
 )
 
-;existe pasta do spring?
 if exist spring-2.3.1.RELEASE (
-    echo Spring-cli já existe
+    echo Spring-cli already exists...
 ) else (
-    echo Spring-cli ja existe
+    echo Downloading Spring-cli...
     curl https://repo.spring.io/release/org/springframework/boot/spring-boot-cli/2.3.1.RELEASE/spring-boot-cli-2.3.1.RELEASE-bin.zip -o spring-boot-cli-2.3.1.RELEASE-bin.zip
     jar -xvf spring-boot-cli-2.3.1.RELEASE-bin.zip
 )
 
 set PATH=%PATH%;%CD%\spring-2.3.1.RELEASE\bin
-echo %PATH%"
 
-spring init --build=gradle --java-version=1.8 --dependencies=websocket --packaging=war app.zip
-jar -xvf app.zip
+if exist app (
+    echo Spring project ok...
+) else (
+    echo Downloading Spring project...
+    mkdir app
+    cmd /c spring init --build=maven --java-version=1.8 --dependencies=websocket --packaging=jar app/app.zip
+    echo Extracting...
+    cd %CD%\app && dir && jar -xvf app.zip
+)
+start cmd /k cd app
