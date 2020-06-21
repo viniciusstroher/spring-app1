@@ -1,7 +1,7 @@
 @echo off
 echo Iniciando App
 IF "%JAVA_HOME%" == "" (
-    echo Define JAVA_HOME
+    echo DEFINE JAVA_HOME
     pause
     exit
 ) ELSE (
@@ -27,5 +27,4 @@ if exist app (
     echo Extracting...
     cd %CD%\app && dir && jar -xvf app.zip
 )
-
-start cmd /k cd app && echo %JAVA_HOME% && mvnm spring-boot:run
+start cmd /c "cd app && echo %JAVA_HOME% && mvnw spring-boot:run"
