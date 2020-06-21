@@ -1,12 +1,17 @@
 @echo off
-echo Iniciando App
+echo GRAVANDO VARS
+
+set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_191
+
 IF "%JAVA_HOME%" == "" (
-    echo DEFINE JAVA_HOME
+    echo "DEFINE JAVA_JDK"
     pause
     exit
 ) ELSE (
-    echo "%JAVA_HOME%"
+    echo "JDK -> %JAVA_JDK%"
 )
+
+pause
 
 if exist spring-2.3.1.RELEASE (
     echo Spring-cli already exists...
@@ -25,6 +30,11 @@ if exist app (
     mkdir app
     cmd /c spring init --build=maven --java-version=1.8 --dependencies=websocket --packaging=jar app/app.zip
     echo Extracting...
-    cd %CD%\app && dir && jar -xvf app.zip
+    cd %CD%\app && dir && jar -xvf app.zip && cd ..
 )
-start cmd /c "cd app && echo %JAVA_HOME% && mvnw spring-boot:run"
+
+cd %CD%\app && mvnw spring-boot:run
+
+pause
+
+
