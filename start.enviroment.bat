@@ -1,10 +1,11 @@
 @echo off
 echo Iniciando App
-
 IF "%JAVA_HOME%" == "" (
     echo Define JAVA_HOME
+    pause
+    exit
 ) ELSE (
-    echo JAVA_HOME PATH %JAVA_HOME%
+    echo "%JAVA_HOME%"
 )
 
 if exist spring-2.3.1.RELEASE (
@@ -26,4 +27,5 @@ if exist app (
     echo Extracting...
     cd %CD%\app && dir && jar -xvf app.zip
 )
-start cmd /k cd app
+
+start cmd /k cd app && echo %JAVA_HOME% && mvnm spring-boot:run
